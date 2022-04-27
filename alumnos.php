@@ -1,4 +1,4 @@
-<?
+<?php
 class Alumno
 {
     public $correo;
@@ -7,7 +7,6 @@ class Alumno
     public $edad;
     public $curso;
     public $foto;
-
     public function __construct($arg_correo = "", $arg_nombre = "", $arg_carnet = "", $arg_edad = "", $arg_curso = "", $arg_foto = "")
     {
         $this->correo = $arg_correo;
@@ -26,7 +25,7 @@ class Alumno
         echo "Curso Actual: $this->curso <br/>";
         echo "Foto: $this->foto <br/>";
     }
-    function __destruct() {
-        
+    function __destruct()
+    {
     }
 }

@@ -1,0 +1,30 @@
+.container {
+    margin-top: 5%;
+}
+
+card {
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 700px;
+    position: fixed;
+}
+
+.cabecera-card {
+    background-color: #84b6f4;
+    color: whitesmoke;
+    text-align: center;
+}
+
+.cabecera-datos {
+    background-color: #f4fab4;
+    color: black;
+    text-align: center;
+}
+
+.form{
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 0%;
+    background-color: #fdfeea;
+    position: relative;
+}
