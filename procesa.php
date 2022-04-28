@@ -5,27 +5,28 @@
 include_once('alumnos.php');
 include_once('serializa.php');
 if (isset($_POST['enviar'])) {
-    if(is_uploaded_file($_FILES['foto']['tmp_name'])){
-        $nombreDirectorio="img/";
-        $id=time();
-        $nombreFichero=$id."-".$_FILES['foto']['name'];
-        move_uploaded_file($_FILES['foto']['tmp_name'],$nombreDirectorio.$nombreFichero);
-    }else{
+    if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
+        $nombreDirectorio = "img/";
+        $id = time();
+        $nombreFichero = $id . "-" . $_FILES['foto']['name'];
+        move_uploaded_file($_FILES['foto']['tmp_name'], $nombreDirectorio . $nombreFichero);
+    } else {
         echo "<h1>HUBO ERROR EN LAS IMAGENES</h1>";
     }
 
-    $almc_estudiante=serializacion::retorna_datos();
+    $almc_estudiante = serializacion::retorna_datos();
     $student = new Alumno($_POST['correo'], $_POST['nombre'], $_POST['numCarnet'], $_POST['edad'], $_POST['curso'], $nombreFichero);
-    array_push($almc_estudiante,$student);
-    $retorno=serializacion::almc_datos($almc_estudiante);
-    if($retorno){
-        //aquí retornaré a la página principal
-    }else{
-        //mostrará un mensaje de error con JS
+    array_push($almc_estudiante, $student);
+    $retorno = serializacion::almc_datos($almc_estudiante);
+    if ($retorno) {
+        header('Location: http://localhost/practica-forms/index.php');
+        die();
+    } else {
+        echo "<h1>HUBO UN PROBLEMA AL GUARDAR DATOS</h1>";
     }
 } else {
     echo "<h1>NO SE ABRIO</h1>";
 }
 
 ?>
-<a href="index.php"><button type="submit"> regresar</button></a>
+<a href="index.php"><button type="submit" class="btn btn-primary btn-lg">Regresar</button></a>

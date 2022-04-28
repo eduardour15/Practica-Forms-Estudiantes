@@ -28,3 +28,19 @@ card {
     background-color: #fdfeea;
     position: relative;
 }
+
+.guardar{
+    width: 80%;
+    margin-left: 10%;
+}
+
+.cabecera-Eliminar{
+    background-color: #fab4b4;
+    color: black;
+    text-align: center;
+}
+.cabecera-editar{
+    background-color: #b4fac3;
+    color: black;
+    text-align: center;
+}

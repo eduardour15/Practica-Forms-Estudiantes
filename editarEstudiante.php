@@ -1,12 +1,19 @@
 <?php
 include_once("alumnos.php");
 include_once("serializa.php");
-if (isset($_POST['nombre'])) {
-    $nombre_editar = $_POST["nombre"];
+
+if(isset($_GET["carnet"])){
+$numCarnet = $_GET['carnet'];
+
+$listEstud=serializacion::retorna_datos();
+for ($i=0; $i <count($listEstud) ; $i++) { 
+    if($listEstud[$i]->carnet==$numCarnet){
+        $estudiante_temp=$listEstud[$i];
+        break;
+    }
+}
 
 ?>
-
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -25,28 +32,28 @@ if (isset($_POST['nombre'])) {
             <div class="card">
                 <h5 class="card-header cabecera-card">PRACTICA FORMS</h5>
             </div>
-            <h5 class="card-header cabecera-datos">EDITANDO ESTUDIANTES</h5>
+            <h5 class="card-header cabecera-editar">EDITANDO ESTUDIANTES</h5>
 
-            <form class="row g-3 needs-validation form" action="procesa.php" enctype='multipart/form-data' method="post">
+            <form class="row g-3 needs-validation form" action="actualizarEstudiante.php" enctype='multipart/form-data' method="post">
                 <div class="col-md-8">
                     <label class="form-label">Nombre completo</label>
-                    <input type="text" class="form-control" name="nombre" required>
+                    <input type="text" class="form-control" name="nombre" value="<?php echo $estudiante_temp->nombre;?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Número de carnet</label>
-                    <input type="text" class="form-control" name="numCarnet" required>
+                    <input type="text" class="form-control" name="numCarnet" required readonly value="<?php echo $estudiante_temp->carnet;?>" >
                 </div>
                 <div class="col-md-2">
                     <label class="form-label"> Edad</label>
-                    <input type="number" class="form-control" name="edad" required>
+                    <input type="number" class="form-control" name="edad" value="<?php echo $estudiante_temp->edad;?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Correo electrónico</label>
-                    <input type="mail" class="form-control" name="correo" required>
+                    <input type="mail" class="form-control" name="correo" value="<?php echo $estudiante_temp->correo;?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Curso actual</label>
-                    <input type="number" class="form-control" name="curso" min="1" max="5" id="numero" required>
+                    <input type="number" class="form-control" name="curso" min="1" max="5" id="numero" value="<?php echo $estudiante_temp->curso;?>" required>
                 </div>
 
                 <div class="col-md-2">
@@ -54,7 +61,7 @@ if (isset($_POST['nombre'])) {
                     <input type="file" class="form-control" name="foto" required>
                 </div>
                 <div class="col-md-12">
-                    <button class="btn btn-primary" type="submit" name="enviar">Enviar</button>
+                    <button class="btn btn-primary" type="submit" name="actualizarEstud">Actualizar</button>
                 </div>
             </form>
         </div>
@@ -63,7 +70,8 @@ if (isset($_POST['nombre'])) {
     </body>
 
     </html>
-<?php } else {
-    echo "<h1>NO SE ENCONTRÓ A ESA PERSONA</h1>";
+<?php 
+}else{
+    echo '<a href="index.php">Regresar</a>';
 }
 ?>

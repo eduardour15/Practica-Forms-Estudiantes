@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once("serializa.php");
 include_once("alumnos.php");
 ?>
@@ -42,7 +42,7 @@ include_once("alumnos.php");
                                 <label class="form-label"> Número de carnet</label>
                                 <input type="text" class="form-control" name="numCarnet" required>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label class="form-label"> Edad</label>
                                 <input type="number" class="form-control" name="edad" required>
                             </div>
@@ -50,17 +50,23 @@ include_once("alumnos.php");
                                 <label class="form-label"> Correo electrónico</label>
                                 <input type="mail" class="form-control" name="correo" required>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label class="form-label"> Curso actual</label>
                                 <input type="number" class="form-control" name="curso" min="1" max="5" id="numero" required>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-5">
                                 <label class="form-label"> Foto</label>
                                 <input type="file" class="form-control" name="foto" required>
                             </div>
+                            <script>
+                                function mensaje() {
+                                    alert("DATOS GUARDADOS!");
+                                }
+                                
+                            </script>
                             <div class="col-md-12">
-                                <button class="btn btn-primary" type="submit" name="enviar">Enviar</button>
+                                <button class="btn btn-success btn-lg guardar" onclick="mensaje();" type="submit" name="enviar">Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -76,31 +82,32 @@ include_once("alumnos.php");
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <?php
-                        $almc_estudiante=serializacion::retorna_datos();
+                        $almc_estudiante = serializacion::retorna_datos();
 
-                         foreach($almc_estudiante as $stud) { ?>
+                        foreach ($almc_estudiante as $stud) { ?>
                             <div class="card mb-3" style="max-width: 90%;">
                                 <div class="row g-0">
                                     <div class="col-md-2">
                                         <img src="./img/<?php echo $stud->foto ?>" class="img-fluid rounded-start" alt="...">
-                                        
+
                                     </div>
                                     <div class="col-md-10">
+
                                         <div class="card-body">
-                                        <?php 
-                                        echo '<h5 class="card-header">'. $stud->nombre.'</h5>';
-                                            echo '<p class="card-text">Correo electrónico : '.$stud->correo.'<br/>'.' Numero de Carnet : '.$stud->carnet.'<br/>'.'Edad : '.$stud->edad.'<br/>'.'Curso actual: '.$stud->curso.'</p> ';
-                                            echo '<a href="editarEstudiante.php"><button type="button" class="btn btn-secondary btn-sm" id='.$stud->nombre.'> Editar</button></a>
-                                                  <button type="button" class="btn btn-danger btn-sm">Eliminar</button>';
-                                           
+                                            <?php
+                                            echo '<h5 class="card-header">' . $stud->nombre . '</h5>';
+                                            echo '<p class="card-text">Correo electrónico : ' . $stud->correo . '<br/>' . ' Numero de Carnet : ' . $stud->carnet . '<br/>' . 'Edad : ' . $stud->edad . '<br/>' . 'Curso actual: ' . $stud->curso . '</p> ';
+                                            echo '<a href="editarEstudiante.php?carnet=' . $stud->carnet . '" type="submit" class="btn btn-primary btn-sm" name="numCarnet">Editar</a>
+                                                  <a href="borrarEstudiante.php?carnet=' . $stud->carnet . '" type="submit" class="btn btn-danger btn-sm">Eliminar</a>';
+
                                             ?>
-                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         <?php } ?>
 
-                            <a href=""></a>
+                        <a href=""></a>
                     </div>
                 </div>
             </div>
