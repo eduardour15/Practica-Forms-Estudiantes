@@ -1,6 +1,10 @@
 <?php
 include_once("serializa.php");
 include_once("alumnos.php");
+include_once("Includes/Conecta_estudiante.php");
+
+$consulta = "select * from informacion";
+$almacena = $conecta->query($consulta);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +67,6 @@ include_once("alumnos.php");
                                 function mensaje() {
                                     alert("DATOS GUARDADOS!");
                                 }
-                                
                             </script>
                             <div class="col-md-12">
                                 <button class="btn btn-success btn-lg guardar" onclick="mensaje();" type="submit" name="enviar">Guardar</button>
@@ -82,32 +85,33 @@ include_once("alumnos.php");
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <?php
-                        $almc_estudiante = serializacion::retorna_datos();
+                        while ($temp_almc = $almacena->fetch_assoc()) { ?>
+                                
+                                <div class="card mb-3" style="max-width: 90%;">
+                                    <div class="row g-0">
+                                        <div class="col-md-2">
+                                            <img src="./img/<?php echo $temp_almc["fotos"] ?>" class="img-fluid rounded-start" alt="...">
+                                        
+                                        </div>
+                                        <?php //} ?>
+                                        <div class="col-md-10">
 
-                        foreach ($almc_estudiante as $stud) { ?>
-                            <div class="card mb-3" style="max-width: 90%;">
-                                <div class="row g-0">
-                                    <div class="col-md-2">
-                                        <img src="./img/<?php echo $stud->foto ?>" class="img-fluid rounded-start" alt="...">
+                                            <div class="card-body">
+                                                <?php
+                                                echo '<h5 class="card-header">' . $temp_almc["nombre"] . '</h5>';
+                                                echo '<p class="card-text">Correo electrónico : ' . $temp_almc["correo"] . '<br/>' . ' Numero de Carnet : ' . $temp_almc["carnet"] . '<br/>' . 'Edad : ' . $temp_almc["edad"] . '<br/>' . 'Curso actual: ' . $temp_almc["curso"] . '</p> ';
+                                                echo '<a href="editarEstudiante.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-primary btn-sm" name="numCarnet">Editar</a>
+                                                  <a href="borrarEstudiant0e.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-danger btn-sm">Eliminar</a>';
 
-                                    </div>
-                                    <div class="col-md-10">
-
-                                        <div class="card-body">
-                                            <?php
-                                            echo '<h5 class="card-header">' . $stud->nombre . '</h5>';
-                                            echo '<p class="card-text">Correo electrónico : ' . $stud->correo . '<br/>' . ' Numero de Carnet : ' . $stud->carnet . '<br/>' . 'Edad : ' . $stud->edad . '<br/>' . 'Curso actual: ' . $stud->curso . '</p> ';
-                                            echo '<a href="editarEstudiante.php?carnet=' . $stud->carnet . '" type="submit" class="btn btn-primary btn-sm" name="numCarnet">Editar</a>
-                                                  <a href="borrarEstudiante.php?carnet=' . $stud->carnet . '" type="submit" class="btn btn-danger btn-sm">Eliminar</a>';
-
-                                            ?>
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php 
+                        } ?>
 
-                        <a href=""></a>
+                            <a href=""></a>
                     </div>
                 </div>
             </div>

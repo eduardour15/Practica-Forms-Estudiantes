@@ -4,6 +4,7 @@
 
 include_once('alumnos.php');
 include_once('serializa.php');
+include_once('Includes/Conecta_estudiante.php');
 if (isset($_POST['enviar'])) {
     if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
         $nombreDirectorio = "img/";
@@ -13,17 +14,13 @@ if (isset($_POST['enviar'])) {
     } else {
         echo "<h1>HUBO ERROR EN LAS IMAGENES</h1>";
     }
-
-    $almc_estudiante = serializacion::retorna_datos();
     $student = new Alumno($_POST['correo'], $_POST['nombre'], $_POST['numCarnet'], $_POST['edad'], $_POST['curso'], $nombreFichero);
-    array_push($almc_estudiante, $student);
-    $retorno = serializacion::almc_datos($almc_estudiante);
-    if ($retorno) {
-        header('Location: http://localhost/practica-forms/index.php');
-        die();
-    } else {
-        echo "<h1>HUBO UN PROBLEMA AL GUARDAR DATOS</h1>";
-    }
+
+    //Insertando en la base de datos 
+    $inserta = "INSERT INTO informacion VALUES('$student->correo','$student->nombre','$student->carnet','$student->edad','$student->curso','$student->foto')";
+    $query = mysqli_query($conecta, $inserta);
+    header('Location: http://localhost/practica-forms/index.php');
+    die();
 } else {
     echo "<h1>NO SE ABRIO</h1>";
 }
