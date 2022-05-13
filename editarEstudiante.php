@@ -1,17 +1,24 @@
 <?php
 include_once("alumnos.php");
-include_once("serializa.php");
+include_once("Includes/Conecta_estudiante.php");
+$estudiante_temp = new Alumno();
+$consulta = "select * from informacion";
 
-if(isset($_GET["carnet"])){
-$numCarnet = $_GET['carnet'];
+$almacena = $conecta->query($consulta);
 
-$listEstud=serializacion::retorna_datos();
-for ($i=0; $i <count($listEstud) ; $i++) { 
-    if($listEstud[$i]->carnet==$numCarnet){
-        $estudiante_temp=$listEstud[$i];
-        break;
+if (isset($_GET["carnet"])) {
+    $numCarnet = $_GET["carnet"];
+
+    while ($temp = $almacena->fetch_assoc()) {
+        if ($temp["carnet"] == $numCarnet) {
+            $estudiante_temp->carnet = $temp['carnet'];
+            $estudiante_temp->nombre = $temp['nombre'];
+            $estudiante_temp->correo = $temp['correo'];
+            $estudiante_temp->edad = $temp['edad'];
+            $estudiante_temp->curso = $temp['curso'];
+            break;
+        }
     }
-}
 
 ?>
     <!DOCTYPE html>
@@ -37,23 +44,23 @@ for ($i=0; $i <count($listEstud) ; $i++) {
             <form class="row g-3 needs-validation form" action="actualizarEstudiante.php" enctype='multipart/form-data' method="post">
                 <div class="col-md-8">
                     <label class="form-label">Nombre completo</label>
-                    <input type="text" class="form-control" name="nombre" value="<?php echo $estudiante_temp->nombre;?>" required>
+                    <input type="text" class="form-control" name="nombre" value="<?php echo $estudiante_temp->nombre; ?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Número de carnet</label>
-                    <input type="text" class="form-control" name="numCarnet" required readonly value="<?php echo $estudiante_temp->carnet;?>" >
+                    <input type="text" class="form-control" name="numCarnet" required readonly value="<?php echo $estudiante_temp->carnet; ?>">
                 </div>
                 <div class="col-md-2">
                     <label class="form-label"> Edad</label>
-                    <input type="number" class="form-control" name="edad" value="<?php echo $estudiante_temp->edad;?>" required>
+                    <input type="number" class="form-control" name="edad" value="<?php echo $estudiante_temp->edad; ?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Correo electrónico</label>
-                    <input type="mail" class="form-control" name="correo" value="<?php echo $estudiante_temp->correo;?>" required>
+                    <input type="mail" class="form-control" name="correo" value="<?php echo $estudiante_temp->correo; ?>" required>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label"> Curso actual</label>
-                    <input type="number" class="form-control" name="curso" min="1" max="5" id="numero" value="<?php echo $estudiante_temp->curso;?>" required>
+                    <input type="number" class="form-control" name="curso" min="1" max="5" id="numero" value="<?php echo $estudiante_temp->curso; ?>" required>
                 </div>
 
                 <div class="col-md-2">
@@ -70,8 +77,8 @@ for ($i=0; $i <count($listEstud) ; $i++) {
     </body>
 
     </html>
-<?php 
-}else{
+<?php
+} else {
     echo '<a href="index.php">Regresar</a>';
 }
 ?>

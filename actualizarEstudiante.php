@@ -1,8 +1,11 @@
 <?php
 include_once('alumnos.php');
-include_once('serializa.php');
+include_once('Includes/Conecta_estudiante.php');
+
+
 
 if (isset($_POST['actualizarEstud'])) {
+    $estudiante_temp = new Alumno();
     if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
         $nombreDirectorio = "img/";
         $id = time();
@@ -11,27 +14,28 @@ if (isset($_POST['actualizarEstud'])) {
     } else {
         echo "<h1>HUBO ERROR EN LAS IMAGENES</h1>";
     }
+    $estudiante_temp->carnet = $_POST['numCarnet'];
+    $estudiante_temp->nombre = $_POST['nombre'];
+    $estudiante_temp->correo = $_POST['correo'];
+    $estudiante_temp->edad = $_POST['edad'];
+    $estudiante_temp->curso = $_POST['curso'];
+    $estudiante_temp->foto = $nombreFichero;
 
-    $almc_estudiante = serializacion::retorna_datos();
-
-    for ($i = 0; $i < count($almc_estudiante); $i++) {
-        if ($almc_estudiante[$i]->carnet == $_POST['numCarnet']) {
-            $almc_estudiante[$i]->nombre = $_POST['nombre'];
-            $almc_estudiante[$i]->carnet = $_POST['numCarnet'];
-            $almc_estudiante[$i]->correo = $_POST['correo'];
-            $almc_estudiante[$i]->edad = $_POST['edad'];
-            $almc_estudiante[$i]->curso = $_POST['curso'];
-            $almc_estudiante[$i]->foto = $nombreFichero;
-            break;
-        }
-    }
-
-    $retorno = serializacion::almc_datos($almc_estudiante);
-    if ($retorno) {
+    $consultaActualiza = "UPDATE informacion 
+    SET nombre='$estudiante_temp->nombre', 
+    correo='$estudiante_temp->correo', 
+    edad= '$estudiante_temp->edad', 
+    curso='$estudiante_temp->curso', 
+    carnet='$estudiante_temp->carnet', 
+    foto='$estudiante_temp->foto' 
+    WHERE carnet= '$_POST[numCarnet]' ";
+    
+    $resultadoActualiza = mysqli_query($conecta, $consultaActualiza);
+    if ($resultadoActualiza) {
         header('Location: http://localhost/practica-forms/index.php');
         die();
     } else {
-        echo "<h1>HUBO UN PROBLEMA AL ACTUALIZAR DATOS</h1>";
+        echo "HUBO UN PROBLEMA EN LA ACTUALIZACION";
     }
 }
 ?>

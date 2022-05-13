@@ -7,7 +7,7 @@ include_once('serializa.php');
 include_once('Includes/Conecta_estudiante.php');
 if (isset($_POST['enviar'])) {
     if (is_uploaded_file($_FILES['foto']['tmp_name'])) {
-        $nombreDirectorio = "img/";
+        $nombreDirectorio = "./img/";
         $id = time();
         $nombreFichero = $id . "-" . $_FILES['foto']['name'];
         move_uploaded_file($_FILES['foto']['tmp_name'], $nombreDirectorio . $nombreFichero);

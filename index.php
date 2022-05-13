@@ -15,6 +15,7 @@ $almacena = $conecta->query($consulta);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="">
     <title>Practica-Forms</title>
 </head>
 
@@ -86,32 +87,31 @@ $almacena = $conecta->query($consulta);
                     <div class="accordion-body">
                         <?php
                         while ($temp_almc = $almacena->fetch_assoc()) { ?>
-                                
-                                <div class="card mb-3" style="max-width: 90%;">
-                                    <div class="row g-0">
-                                        <div class="col-md-2">
-                                            <img src="./img/<?php echo $temp_almc["fotos"] ?>" class="img-fluid rounded-start" alt="...">
-                                        
-                                        </div>
-                                        <?php //} ?>
-                                        <div class="col-md-10">
 
-                                            <div class="card-body">
-                                                <?php
-                                                echo '<h5 class="card-header">' . $temp_almc["nombre"] . '</h5>';
-                                                echo '<p class="card-text">Correo electrónico : ' . $temp_almc["correo"] . '<br/>' . ' Numero de Carnet : ' . $temp_almc["carnet"] . '<br/>' . 'Edad : ' . $temp_almc["edad"] . '<br/>' . 'Curso actual: ' . $temp_almc["curso"] . '</p> ';
-                                                echo '<a href="editarEstudiante.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-primary btn-sm" name="numCarnet">Editar</a>
-                                                  <a href="borrarEstudiant0e.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-danger btn-sm">Eliminar</a>';
+                            <div class="card mb-3" style="max-width: 90%;">
+                                <div class="row g-0">
+                                    <div class="col-md-2">
+                                        <img src="./img/<?php echo $temp_almc["foto"] ?>" class="img-fluid rounded-start" alt="...">
 
-                                                ?>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-10">
+
+                                        <div class="card-body">
+                                            <?php
+                                            echo '<h5 class="card-header">' . $temp_almc["nombre"] . '</h5>';
+                                            echo '<p class="card-text">Correo electrónico : ' . $temp_almc["correo"] . '<br/>' . ' Numero de Carnet : ' . $temp_almc["carnet"] . '<br/>' . 'Edad : ' . $temp_almc["edad"] . '<br/>' . 'Curso actual: ' . $temp_almc["curso"] . '</p> ';
+                                            echo '<a href="editarEstudiante.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-primary btn-sm" name="numCarnet">Editar</a>
+                                                  <a href="borrarEstudiante.php?carnet=' . $temp_almc["carnet"] . '" type="submit" class="btn btn-danger btn-sm">Eliminar</a>';
+
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
-                            <?php 
+                            </div>
+                        <?php
                         } ?>
 
-                            <a href=""></a>
+                        <a href=""></a>
                     </div>
                 </div>
             </div>
